@@ -17,6 +17,7 @@ func RunStickerApi() {
 
 	// Starts a new Gin instance with no middle-ware
 	ServerEngine = gin.New()
+	ServerEngine.SetTrustedProxies(nil)
 	LoadHandlers()
 	// Listen and serve on defined port
 	logging.Info("Listening on port ", port)
