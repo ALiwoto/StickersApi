@@ -18,7 +18,7 @@ func GetPackInfoHandler(c *gin.Context) {
 
 	info := database.GetPackInfo(packId)
 	if info == nil {
-		entry.SendUserNotFoundError(c, OriginGetPackInfo)
+		entry.SendPackNotFoundError(c, OriginGetPackInfo)
 		return
 	}
 
@@ -37,6 +37,9 @@ func SearchPackHandler(c *gin.Context) {
 	if err != nil {
 		logging.Error("Failed to search pack info:", err)
 		entry.SendInternalServerError(c, OriginSearchPack)
+		return
+	} else if info == nil {
+		entry.SendPackNotFoundError(c, OriginSearchPack)
 		return
 	}
 

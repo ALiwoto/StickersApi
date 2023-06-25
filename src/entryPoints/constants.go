@@ -9,7 +9,7 @@ const (
 	// the target's user id is invalid. (contains invalid characters)
 	ErrInvalidUserId = "Invalid user-id provided"
 
-	ErrPackNotFound = "User not found"
+	ErrPackNotFound = "Pack not found"
 
 	// ErrRestoredOnly is the error message that should be sent when user is
 	// trying to use a method which can only be used on a target user with `Restored`

@@ -57,7 +57,7 @@ func SendInvalidUserIdError(c *gin.Context, origin string) {
 	})
 }
 
-func SendUserNotFoundError(c *gin.Context, origin string) {
+func SendPackNotFoundError(c *gin.Context, origin string) {
 	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,
 		Error: &EndpointError{
