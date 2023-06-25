@@ -68,17 +68,6 @@ func SendUserNotFoundError(c *gin.Context, origin string) {
 	})
 }
 
-func SendRestoredOnlyError(c *gin.Context, origin string) {
-	c.JSON(http.StatusOK, &EndpointResponse{
-		Success: false,
-		Error: &EndpointError{
-			ErrorCode: http.StatusBadRequest,
-			Message:   ErrRestoredOnly,
-			Origin:    origin,
-		},
-	})
-}
-
 func SendUserNotRegisteredError(c *gin.Context, origin string) {
 	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,

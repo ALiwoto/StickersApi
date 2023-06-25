@@ -20,9 +20,7 @@ const (
 	// target's user is not considered as a registered user.
 	ErrUserNotRegistered = "User not registered"
 
-	// ErrNoData is the error message that should be sent when the
-	// inspector hasn't provided any data for us.
-	ErrNoData = "No raw data provided"
+	ErrNoData = "No data provided"
 
 	// ErrInvalidToken is the error message that should be sent when the
 	// current user's token is invalid.

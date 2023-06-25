@@ -11,6 +11,11 @@ import (
 
 func GetPackInfoHandler(c *gin.Context) {
 	packId := utils.GetParam(c, "pack-id", "packId")
+	if len(packId) < 3 {
+		entry.SendNoDataError(c, OriginGetPackInfo)
+		return
+	}
+
 	info := database.GetPackInfo(packId)
 	if info == nil {
 		entry.SendUserNotFoundError(c, OriginGetPackInfo)
@@ -22,6 +27,10 @@ func GetPackInfoHandler(c *gin.Context) {
 
 func SearchPackHandler(c *gin.Context) {
 	packTitle := utils.GetParam(c, "title", "pack-title", "packTitle")
+	if len(packTitle) < 3 {
+		entry.SendNoDataError(c, OriginSearchPack)
+	}
+
 	info, err := database.SearchPackInfo(&database.SearchPackRequest{
 		PackTitle: packTitle,
 	})
@@ -40,6 +49,11 @@ func AddPackHandler(c *gin.Context) {
 	token := utils.GetParam(c, "token")
 	if !apiConfig.IsTokenValid(token) {
 		entry.SendPermissionDenied(c, OriginAddPack)
+	}
+
+	if len(packId) < 3 || len(packTitle) < 3 {
+		entry.SendNoDataError(c, OriginAddPack)
+		return
 	}
 
 	info, err := database.AddPack(packId, packTitle)
