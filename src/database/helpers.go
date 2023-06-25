@@ -92,6 +92,9 @@ func SearchPackInfo(req *SearchPackRequest) ([]*StickerPackInfo, error) {
 }
 
 func AddPack(packId, packTitle string) (*StickerPackInfo, error) {
+	dbMutex.Lock()
+	defer dbMutex.Unlock()
+
 	pack := GetPackInfo(packId)
 	if pack != nil {
 		return pack, nil
