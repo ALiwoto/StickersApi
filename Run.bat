@@ -1,9 +1,9 @@
 :: this bat file is supposed to build the application from source code, build the documents and
-:: run the psychopass app after all of these are done.
+:: run the StickersApi app after all of these are done.
 :: created by ALiwoto (woto@kaizoku.cyou)
 @echo off
-TITLE Building PsychoPass binary file
+TITLE Building StickersApi binary file
 go mod tidy
-go build -o PsychoPass.exe
+go build -o StickersApi.exe
 cd .\docs
-.\Build.bat && cd .. && .\PsychoPass.exe
+.\Build.bat && cd .. && .\StickersApi.exe
