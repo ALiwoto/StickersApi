@@ -50,6 +50,10 @@ func StartDatabase() error {
 }
 
 func GetPackInfo(packId string) *StickerPackInfo {
+	if !IsPackIdAcceptable(packId) {
+		return nil
+	}
+
 	info := packInfoMap.Get(packId)
 	if info == stickerPackInfoValueNotFound {
 		return nil
@@ -80,6 +84,10 @@ func GetPackInfo(packId string) *StickerPackInfo {
 
 // SearchPackInfo searches for sticker pack info in the database.
 func SearchPackInfo(req *SearchPackRequest) ([]*StickerPackInfo, error) {
+	if req == nil || !IsPackTitleAcceptable(req.PackTitle) {
+		return nil, ErrPackTitleInvalid
+	}
+
 	var results []*StickerPackInfo
 
 	whereStr, valuesArray := req.BuildWhereQuery()
@@ -92,6 +100,10 @@ func SearchPackInfo(req *SearchPackRequest) ([]*StickerPackInfo, error) {
 }
 
 func AddPack(packId, packTitle string) (*StickerPackInfo, error) {
+	if !IsPackIdAcceptable(packId) || !IsPackTitleAcceptable(packTitle) {
+		return nil, ErrPackIdInvalid
+	}
+
 	dbMutex.Lock()
 	defer dbMutex.Unlock()
 
@@ -114,4 +126,24 @@ func AddPack(packId, packTitle string) (*StickerPackInfo, error) {
 
 	packInfoMap.Add(packId, info)
 	return info, nil
+}
+
+// IsPackIdAcceptable returns true if pack id is acceptable.
+// pack id must only contain english characters and '_'.
+func IsPackIdAcceptable(packId string) bool {
+	if len(packId) < 5 || len(packId) > 32 {
+		return false
+	}
+
+	for _, c := range packId {
+		if (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_' {
+			continue
+		}
+		return false
+	}
+	return true
+}
+
+func IsPackTitleAcceptable(packTitle string) bool {
+	return len(packTitle) >= 3 && len(packTitle) <= 64
 }
