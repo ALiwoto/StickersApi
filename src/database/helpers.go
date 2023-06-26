@@ -131,7 +131,7 @@ func AddPack(packId, packTitle string) (*StickerPackInfo, error) {
 // IsPackIdAcceptable returns true if pack id is acceptable.
 // pack id must only contain english characters and '_'.
 func IsPackIdAcceptable(packId string) bool {
-	if len(packId) < 5 || len(packId) > 32 {
+	if len(packId) < 5 || len(packId) > 64 {
 		return false
 	}
 
