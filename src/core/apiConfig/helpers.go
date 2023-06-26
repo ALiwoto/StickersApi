@@ -5,8 +5,9 @@ import (
 )
 
 func LoadConfig() error {
-	return LoadConfigFromFile("config.ini")
+	return LoadConfigFromFile("config.ini:virtual")
 }
+
 func LoadConfigFromFile(fileName string) error {
 	if ConfigValue != nil {
 		return nil
