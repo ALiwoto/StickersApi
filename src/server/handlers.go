@@ -14,6 +14,10 @@ func LoadHandlers() {
 	bindHandler(stickerHandlers.GetPackInfoHandler, "getPack")
 	bindHandler(stickerHandlers.SearchPackHandler, "searchPack")
 
+	bindHandler(func(ctx *gin.Context) {
+		ctx.Writer.Write([]byte("addPack, getPack, searchPack"))
+	}, "Docs")
+
 	bindNoRoot()
 }
 
