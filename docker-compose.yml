@@ -13,7 +13,7 @@ services:
       - stickers
       - databases
     ports:
-      - "3000:3000"
+      - "7412:7412"
 
 networks:
   stickers:
