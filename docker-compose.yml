@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  stickersapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: stickersapi:${TAG}
+    container_name: stickersapi
+    env_file:
+      - stack.env
+    networks:
+      - stickers
+      - databases
+    ports:
+      - "3000:3000"
+
+networks:
+  stickers:
+    name: stickers
+  databases:
+    external: true 
