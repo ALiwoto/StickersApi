@@ -1,10 +1,13 @@
 package apiConfig
 
 import (
+	"os"
+
 	ws "github.com/AnimeKaizoku/ssg/ssg"
 )
 
 func LoadConfig() error {
+	os.Setenv("DATABASE_URL", "ABCSF")
 	return LoadConfigFromFile("config.ini:virtual")
 }
 
