@@ -3,6 +3,7 @@ package database
 import (
 	"github.com/AnimeKaizoku/StickersApi/src/core/apiConfig"
 	"github.com/AnimeKaizoku/StickersApi/src/core/utils/logging"
+	"github.com/AnimeKaizoku/ssg/ssg"
 	"gorm.io/driver/postgres"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -128,6 +129,10 @@ func AddPack(packId, packTitle string) (*StickerPackInfo, error) {
 	return info, nil
 }
 
+func IsEnglish(r rune) bool {
+	return (r >= 'a' && r <= 'z') || (r >= 'A' && r <= 'Z')
+}
+
 // IsPackIdAcceptable returns true if pack id is acceptable.
 // pack id must only contain english characters and '_'.
 func IsPackIdAcceptable(packId string) bool {
@@ -135,12 +140,26 @@ func IsPackIdAcceptable(packId string) bool {
 		return false
 	}
 
-	for _, c := range packId {
-		if (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_' {
+	for i, c := range packId {
+		if IsEnglish(c) {
+			// a valid english letter, let it pass
 			continue
 		}
-		return false
+
+		if ssg.IsRuneNumber(c) && i != 0 {
+			// a valid number, let it pass
+			continue
+		} else if i == 0 {
+			// we only allow a-z at the beginning, but if we are
+			// at the end of the pack id, we allow numbers as well.
+			return false
+		}
+
+		if c != '_' {
+			return false
+		}
 	}
+
 	return true
 }
 
