@@ -63,7 +63,7 @@ func AddPackHandler(c *gin.Context) {
 
 	info, err := database.AddPack(packId, packTitle)
 	if err != nil {
-		logging.Error("Failed to add pack info:", err)
+		logging.Error("Failed to add pack info with id: "+packId+"; title: "+packTitle+":", err)
 		entry.SendInternalServerError(c, OriginAddPack)
 		return
 	}
